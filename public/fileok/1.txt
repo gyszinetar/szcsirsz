@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Irányítószám kereső</title>  
+<link rel="stylesheet" type="text/css" href="dataosm.css">
+	<link rel="shortcut icon" href="kepek/u15.ico" />
+<meta name="description" content="Irányítószám kereső,Kereshető irányítószám település alapján, település és utcanév alapján vagy utcanév lista irányítószám alapján.">
+     <style type="text/css">
+#duma {
+width:200px;
+border:1px solid black;
+height:23px;
+}
+
+	#telker {
+position:absolute; top:25px;left:0;
+max-height:300px;overflow:auto;width:202px;
+border:1px solid black;
+background:#26894A;color:white;
+display:none;
+	}
+
+	#telker li {
+		list-style-type:none;
+		margin: 0px 0px 0px 0px;
+		padding: 3px;
+		cursor: pointer;
+	}
+	
+	#telker li:hover {
+background:white;color:#26894A;
+
+	}
+#dumaut {
+width:200px;
+border:1px solid black;
+height:23px;
+}
+
+
+	#utker {
+position:absolute; top:25px;left:0;
+max-height:300px;overflow:auto;width:202px;
+border:1px solid black;
+background:#26894A;color:white;
+display:none;
+	}
+
+	#utker li {
+		list-style-type:none;
+		margin: 0px 0px 0px 0px;
+		padding: 3px;
+		cursor: pointer;
+	}
+	
+	#utker li:hover {
+background:white;color:#26894A;
+
+	}
+
+#irsz {
+width:60px;
+border:1px solid black;
+height:23px;
+}
+	#dirsz {
+position:absolute; top:25px;left:0;
+max-height:300px;overflow:auto;width:62px;
+border:1px solid black;
+background:#26894A;color:white;
+display:none;
+	}
+
+	#dirsz li {
+		list-style-type:none;
+		margin: 0px 0px 0px 0px;
+		padding: 3px;
+		cursor: pointer;
+	}
+	
+	#dirsz li:hover {
+background:white;color:#26894A;
+
+	}
+
+
+table, th, td {
+margin:10px 0 10px 0;
+	background: #f9f9f9;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    border-spacing: 0px;
+	font-size: 12px;
+	width:670px;
+    border: 1px solid black;
+}
+caption {
+
+    background-color: #26894A;
+    color: white;
+	font-size: 14px;
+	padding:3px;
+}
+	#list {
+display:none;
+	}
+	#lki {
+display:none;
+	}
+
+#terkep {
+    position: fixed;
+    top: 5%;
+    left: 5%;
+    bottom: 5%;
+    right: 5%;
+display:none;
+    border: 2px solid #000;
+
+}
+
+.tgomb {
+    cursor: pointer;
+
+ 
+}
+        </style>
+<script>
+	function fill(szov) {
+    document.getElementById("duma").value=szov;
+    document.getElementById("telker").style.display="none";
+    document.getElementById("dumaut").value='';
+    document.getElementById("irsz").value='';
+    document.getElementById("utker").style.display="none";
+
+	}
+function telepules(str) {
+  if (str.length==0) {
+    document.getElementById("telker").style.display="none";
+    return;
+  }
+  if (window.XMLHttpRequest) {
+    xmlhttp=new XMLHttpRequest();
+  } else {
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    document.getElementById("telker").style.display="block";
+      document.getElementById("telker").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","ad.php?tel="+str,true);
+  xmlhttp.send();
+}
+//utca
+
+	function fillut(szov) {
+    document.getElementById("dumaut").value=szov;
+    document.getElementById("irsz").value='';
+    document.getElementById("utker").style.display="none";
+	}
+function utca(str) {
+var tel=document.getElementById("duma").value;
+  if (str.length==0) {
+    document.getElementById("utker").style.display="none";
+    return;
+  }
+  if (window.XMLHttpRequest) {
+    xmlhttp=new XMLHttpRequest();
+  } else {
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    document.getElementById("utker").style.display="block";
+      document.getElementById("utker").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","ad.php?utca="+tel+","+str,true);
+  xmlhttp.send();
+}
+
+	function fillirsz(szov) {
+    document.getElementById("irsz").value=szov;
+    document.getElementById("telker").style.display="none";
+    document.getElementById("dumaut").value='';
+    document.getElementById("duma").value='';
+    document.getElementById("utker").style.display="none";
+    document.getElementById("dirsz").style.display="none";
+
+	}
+function isz(str) {
+  if (str.length==0) {
+    document.getElementById("dirsz").style.display="none";
+    return;
+  }
+  if (window.XMLHttpRequest) {
+    xmlhttp=new XMLHttpRequest();
+  } else {
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  xmlhttp.onreadystatechange=function() {
+    if (this.readyState==4 && this.status==200) {
+    document.getElementById("dirsz").style.display="block";
+      document.getElementById("dirsz").innerHTML=this.responseText;
+    }
+  }
+  xmlhttp.open("GET","ad.php?isz="+str,true);
+  xmlhttp.send();
+}
+
+    function listbe() {
+        document.getElementById('list').style.display = 'block';
+        document.getElementById('lbe').style.display = 'none';
+        document.getElementById('lki').style.display = 'block';
+    }
+    function listki() {
+        document.getElementById('list').style.display = 'none';
+        document.getElementById('lki').style.display = 'none';
+        document.getElementById('lbe').style.display = 'block';
+    }
+
+    function terbe(id,nev) {
+document.getElementById("ifr").src='0if.php?osmid='+id+'&nev='+nev;
+        document.getElementById('terkep').style.display = 'block';
+ 
+    }
+    function terki() {
+        document.getElementById('terkep').style.display = 'none';
+document.getElementById("ifr").src='';
+}
+</script>
+</head>
+<body>
+<div id="lap">
+
+      <div id="fej">
+<div id="logo">
+<a href="http://data2.openstreetmap.hu/" title="Kezőlap">
+<img src="kepek/uhunszov.svg" alt="data2.openstreetmap.hu" width="60" height="60" /></a>
+</div>
+<div id="fejsz">
+<b>data2.openstreetmap.hu</b>
+</div>
+</div>
+
+
+      <div id="bal">
+<div  id="menuf">
+	
+
+<ul>
+
+<li ><a href="https://data2.openstreetmap.hu/index.php">Kezdőlap</a></li>
+<li ><a href="https://data2.openstreetmap.hu/turistautak/index.php">Turistautak listája</a></li>
+<li ><a href="https://data2.openstreetmap.hu/turistautak/turistautak.php">Turistautak térképen</a></li>
+<li ><a href="https://turistautak.openstreetmap.hu/index.php">Turistautak OSM</a></li>
+<li ><a href="https://turistautak.openstreetmap.hu/turautvonal.php">Turista útvonaltervező</a></li>
+<li ><a href="https://data2.openstreetmap.hu/turistautak/kerutlist.php">Kerékpárutak listája</a></li>
+<li ><a href="https://data2.openstreetmap.hu/turistautak/kerekparutak.php">Kerékpárutak térképen</a></li>
+<li ><a href="https://data2.openstreetmap.hu/turistautak/vasutlist.php">Vasútvonalak listája</a></li>
+<li ><a href="https://data2.openstreetmap.hu/turistautak/vasutvonalak.php">Vasútvonalak térképen</a></li>
+<li ><a href="https://data2.openstreetmap.hu/utcanev.php">Utcanevek</a></li>
+<li ><a href="https://data2.openstreetmap.hu/utnevhiba.php">Utcanév hibakereső</a></li>
+<li ><a href="https://data2.openstreetmap.hu/utcalista.php">Utcanév lista</a></li>
+<li ><a href="https://data2.openstreetmap.hu/hatarok/index.php">Közigazgatási határok</a></li>
+<li ><a href="https://data2.openstreetmap.hu/hatarok/hatarok.php">Közigazgatási határok térképen</a></li>
+<li ><a href="https://data2.openstreetmap.hu/poi/index.php">POI szerkesztő</a></li>
+<li ><a href="https://data2.openstreetmap.hu/utvonal.php">Útvonaltervező </a></li>
+<li ><a href="https://data2.openstreetmap.hu/utcakereso/index.php">Utcakereső</a></li>
+<li ><a href="https://data2.openstreetmap.hu/utcakereso/index2.php">Utcakereső 2</a></li>
+<li class="cur"><a href="https://data2.openstreetmap.hu/irsz.php">Irányítószám kereső</a></li>
+<li ><a href="https://data2.openstreetmap.hu/addr.php">Házszámok</a></li>
+<li ><a href="https://data2.openstreetmap.hu/addrtel.php">Házszámok 2</a></li>
+<li ><a href="https://data2.openstreetmap.hu/addrpc.php">Házszámok 3</a></li>
+<li ><a href="https://data2.openstreetmap.hu/geokod/index.php">Geokódoló</a></li>
+<li ><a href="https://data2.openstreetmap.hu/hely/">Hely jelölése</a></li>
+<li ><a href="https://data2.openstreetmap.hu/utcastat.php">Utcanév statisztika</a></li>
+<li ><a href="https://data2.openstreetmap.hu/stat.php">Statisztika</a></li>
+<li ><a href="https://data2.openstreetmap.hu/esm/index.php">Elveszett sínek</a></li>
+<li ><a href="https://turistautak.openstreetmap.hu/mefo/">Mecseki források jegyzéke</a></li>
+<li ><a href="https://data2.openstreetmap.hu/poi/posta.php">Kapcsolat</a></li>
+ 
+
+</ul>
+</div>
+
+</div>
+      <div id="jobb">
+      <div id="jtart">
+<h1>Irányítószám kereső</h1> 
+<p>
+Kereshető irányítószám település alapján, település és utcanév alapján vagy utcanév lista irányítószám alapján.
+
+
+
+
+</p>
+
+
+<form  method="get" action="" style="background:#26894A;color:white;border:1px solid black;width:670px;height:50px;margin:10px -5px 10px -5px;padding:5px;">
+
+<label  style="margin-left:75px;float:left;">Település</label><label  style="margin-left:185px;float:left;">Utca</label><label  style="margin-left:100px;float:left;">Irányítószám</label><br>
+<div style="position:relative;margin-left:10px;width:200px;float:left;">
+<input type="text" size="30" onkeyup="telepules(this.value)" id="duma" name="tel" autocomplete="off">
+<div id="telker"></div>
+</div>
+<div style="position:relative;margin-left:40px;width:200px;float:left;">
+<input type="text" size="30" onkeyup="utca(this.value)" id="dumaut" name="ut" autocomplete="off">
+<div id="utker"></div>
+</div>
+
+<div style="position:relative;margin-left:40px;width:60px;float:left;">
+<input type="text" size="4" onkeyup="isz(this.value)" name="irsz" id="irsz" autocomplete="off"/>
+<div id="dirsz"></div>
+
+</div>
+
+<input type="submit" value="Keresés" style="margin-left:40px;float:left;border:1px solid black;height:25px;"/>
+</form>
+
+
+<table><caption>9962</caption>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Arany János utca</td><td style="width:50px;"><a onclick="terbe('6775046,195140983','9962 Csörötnek Arany János utca');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Erdő utca</td><td style="width:50px;"><a onclick="terbe('6775046,195140984','9962 Csörötnek Erdő utca');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Faluréti út</td><td style="width:50px;"><a onclick="terbe('6775046,195140986','9962 Csörötnek Faluréti út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Faluréti utca</td><td style="width:50px;"><a onclick="terbe('6775046,195140985','9962 Csörötnek Faluréti utca');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Fő út</td><td style="width:50px;"><a onclick="terbe('6775046,195140990,485939772,485939773,195140989,230560341,485939774,485939770','9962 Csörötnek Fő út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Fő utca</td><td style="width:50px;"><a onclick="terbe('6775046,195140988,195140987','9962 Csörötnek Fő utca');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Gyöngyös út</td><td style="width:50px;"><a onclick="terbe('6775046,195140991','9962 Csörötnek Gyöngyös út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Hársalja út</td><td style="width:50px;"><a onclick="terbe('6775046,195140992','9962 Csörötnek Hársalja út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Kossuth Lajos út</td><td style="width:50px;"><a onclick="terbe('6775046,195140993','9962 Csörötnek Kossuth Lajos út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Petőfi utca</td><td style="width:50px;"><a onclick="terbe('6775046,195140994','9962 Csörötnek Petőfi utca');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Rába utca</td><td style="width:50px;"><a onclick="terbe('6775046,195140995','9962 Csörötnek Rába utca');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Templom út</td><td style="width:50px;"><a onclick="terbe('6775046,195140997,195140998','9962 Csörötnek Templom út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Csörötnek</td><td>Vasúti út</td><td style="width:50px;"><a onclick="terbe('6775046,195140999,485939771,195141004,195141005,195141000,485939769,195141003','9962 Csörötnek Vasúti út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Arany János út</td><td style="width:50px;"><a onclick="terbe('6775046,195150336','9962 Magyarlak Arany János út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Árpád út</td><td style="width:50px;"><a onclick="terbe('6775046,195150366','9962 Magyarlak Árpád út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Boldog Brenner János út</td><td style="width:50px;"><a onclick="terbe('6775046,195150339','9962 Magyarlak Boldog Brenner János út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Erdő út</td><td style="width:50px;"><a onclick="terbe('6775046,195150337','9962 Magyarlak Erdő út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Fő út</td><td style="width:50px;"><a onclick="terbe('6775046,195140990','9962 Magyarlak Fő út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Hegyalja út</td><td style="width:50px;"><a onclick="terbe('6775046,195150338','9962 Magyarlak Hegyalja út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Hunyadi János út</td><td style="width:50px;"><a onclick="terbe('6775046,195150341','9962 Magyarlak Hunyadi János út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Kölcsey Ferenc út</td><td style="width:50px;"><a onclick="terbe('6775046,195150345','9962 Magyarlak Kölcsey Ferenc út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Kossuth Lajos út</td><td style="width:50px;"><a onclick="terbe('6775046,313258990,195150343,195150344,195150342','9962 Magyarlak Kossuth Lajos út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Mátyás út</td><td style="width:50px;"><a onclick="terbe('6775046,195150346','9962 Magyarlak Mátyás út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Móra Ferenc út</td><td style="width:50px;"><a onclick="terbe('6775046,195150347','9962 Magyarlak Móra Ferenc út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Petőfi Sándor út</td><td style="width:50px;"><a onclick="terbe('6775046,195150348','9962 Magyarlak Petőfi Sándor út');"  class="tgomb">Térkép</a></td></tr>
+
+<tr><td style="width:50px;">9962</td><td>Magyarlak</td><td>Rákóczi Ferenc út</td><td style="width:50px;"><a onclick="terbe('6775046,88811801,195150349','9962 Magyarlak Rákóczi Ferenc út');"  class="tgomb">Térkép</a></td></tr></table>
+<p style="width:670px;border:1px solid black;background-color: #26894A;color: white;text-align:center;margin-top:-8px;">Összesen: 26 db utca</p>
+
+</div><!--jtart-->
+
+</div>
+      <div id="lab">
+<div id="rlink">
+<a href="kozigazgatasihatarok.php">Magyarországi közigazgatási határok</a>
+</div>
+      <div id="labszov">
+Adatok: <a href='http://openstreetmap.org/'>© OpenStreetMap és közreműködői </a>,<a href='http://www.openstreetmap.org/copyright'>(ODbL 1.0.)</a>
+</div>
+</div>
+
+
+
+
+</div>
+
+<div id="terkep"><input type="button" onClick="terki();" value="Bezárás" style="position:absolute;top:3px;right:5px;" />
+<iframe id='ifr' frameborder="0" scrolling="no" width="100%" height="100%">
+</div>
+
+</body>
+</html>

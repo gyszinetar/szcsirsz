@@ -1,0 +1,119 @@
+/*-------------------------------------------------------------
+CSS for required elements .
+------------------------------------------------------------*/
+@import url(http://fonts.googleapis.com/css?family=Rokkitt);
+
+h1,p {
+	clear:both;
+	margin-bottom:15px;
+	text-align:center;
+	}
+
+hr{
+	margin-bottom: 20px;
+	}
+
+div#main {
+	width:900px;
+	height: 500px;
+	margin : 20px auto;
+	font-family: 'Rokkitt', serif;
+	}
+
+div#first{
+	width : 400px;
+	padding: 0px 40px 20px 40px;
+	float:left;
+	background-color: gainsboro;
+	margin:10px;
+	}
+
+label {
+	font-size: 20px;
+	}
+
+input{
+	width: 390px;
+	height: 30px;
+	font-size: 14px;
+	box-shadow: 0 0 5px;
+	-webkit-box-shadow:  0 0 5px;	/* for chrome & Safari browser */
+	-moz-box-shadow:  0 0 5px;   /* for Mozilla web browser*/
+	border-style: none;
+	margin-top: 5px;
+	padding-left:10px;
+	}
+
+#button {
+	display:block;
+	margin:0 auto;
+	width:100px;
+	font-family: 'Rokkitt', serif;
+	box-shadow: 0 0 5px;
+	text-shadow: 1px 1px 1px #949494;
+	background-color: silver;
+	font-size: 18px;
+	}
+
+/*-------------------------------------------------------------
+CSS for right side contents (Optional).
+------------------------------------------------------------*/
+div#second {
+	width:200px;
+	height: 474px;
+	float: right;
+	margin:10px;
+	line-height:20px;
+	padding: 0 20px;
+	border: 1px solid rgb(224, 217, 217);
+	}
+
+img#fugo{
+	margin: 10px 60px 0px 60px;
+	}
+
+p#p2{
+	text-align: justify;
+	}
+
+a {
+    display: block;
+    width: 390px;
+    height: 30px;
+    background: #DDDDDD;
+    text-align: center;
+	border:2px solid #c9c9c9;
+    border-radius: 5px;
+	    -webkit-box-shadow: 0 0 3px;
+	color: black;
+    text-decoration: none;
+	font-family: "Times New Roman", Georgia, Serif;
+	}
+	
+.a2{
+    display: block;
+    width: 100px;
+    height: 30px;
+    background: #DDDDDD;
+    text-align: center;
+	border:2px solid #c9c9c9;
+    border-radius: 5px;
+	    -webkit-box-shadow: 0 0 3px;
+	color: black;
+    text-decoration: none;
+	font-family: "Times New Roman", Georgia, Serif;
+	}
+.radio1{
+		width: 25px;
+	height: 20px;
+	font-size: 14px;
+	border-style: none;
+	margin-top: 5px;
+	padding-left:10px;
+	margin:none;
+	box-shadow: 0 0 0px;
+	-webkit-box-shadow:  0 0 0px;	/* for chrome & Safari browser */
+	-moz-box-shadow:  0 0 0px;   /* for Mozilla web browser*/
+	
+}
+
